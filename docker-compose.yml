@@ -2,7 +2,7 @@ version: '3'
 services:
     php:
         # restart: always
-        build: 
+        build:
             args:
                 user: 1000 # your username (echo $USER)
                 uid: 1000 # your uid (id -u)
@@ -10,14 +10,14 @@ services:
             dockerfile: docker/php/Dockerfile
         volumes:
             - ./:/var/www/html
-            - ./docker/php/prod.ini:/usr/local/etc/php/php.ini
+            - ./docker/php/php.ini:/usr/local/etc/php/php.ini
         ports:
             - "9001:9001"
         environment:
             XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
             XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
         networks:
-          - laravel
+            - laravel
     mysql:
         # restart: always
         image: 'mysql:8.0'
@@ -47,10 +47,10 @@ services:
             - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
             - ./docker/nginx/logs:/var/log/nginx
         depends_on:
-          - php
-          - mysql
+            - php
+            - mysql
         networks:
-          - laravel
+            - laravel
     redis:
         # restart: always
         image: 'redis:alpine'
